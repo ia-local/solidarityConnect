@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SolidarityConnect - L'IA au cœur de la générosité programmée</title>
+    <meta name="description" content="Découvrez SolidarityConnect : l'intelligence artificielle au service de la formation, de l'emploi et de la lutte contre la précarité.">
+    <link rel="canonical" href="https://www.solidarityconnect.org"> <style>
+        /* Styles CSS Intégrés (pour un affichage rapide et autonome) */
+        :root {
+            --primary-color: #4CAF50; /* Vert solidarité */
+            --secondary-color: #388E3C; /* Vert plus foncé */
+            --accent-color: #FFC107; /* Jaune dynamisme */
+            --text-color: #333;
+            --light-bg: #f4f4f4;
+            --white: #ffffff;
+            --dark-gray: #555;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s ease;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background-color: var(--secondary-color);
+            padding: 0.75rem 0;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Pour les petits écrans */
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 5px 10px;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+            border-radius: 5px;
+        }
+
+        nav ul li a:hover, nav ul li a:focus {
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 2rem 0;
+            max-width: 1200px;
+            margin: 2rem auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* Contenu principal et sidebar */
+            gap: 2rem;
+            box-sizing: border-box;
+            padding: 2rem;
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://via.placeholder.com/1600x600?text=SolidarityConnect+Hero') no-repeat center center/cover; /* Placeholder, remplacez par une image réelle */
+            color: var(--white);
+            text-align: center;
+            padding: 4rem 2rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            grid-column: 1 / -1; /* Prend toute la largeur sur la grille */
+        }
+
+        .hero-section h2 {
+            font-size: 3em;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        .hero-section p {
+            font-size: 1.3em;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--dark-gray);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color var(--transition-speed), transform var(--transition-speed);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover, .cta-button:focus {
+            background-color: #FFD700;
+            transform: translateY(-2px);
+        }
+
+        .content-section {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 10px;
+        }
+
+        .content-section p {
+            margin-bottom: 1rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-item {
+            background-color: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform var(--transition-speed);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-item h3 {
+            color: var(--secondary-color);
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+
+        .feature-item p {
+            font-size: 0.95em;
+            color: var(--dark-gray);
+        }
+
+        aside {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            align-self: start; /* Garde la sidebar en haut */
+        }
+
+        aside h2 {
+            color: var(--primary-color);
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
+        .donation-box {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .donation-box img {
+            max-width: 100%;
+            height: auto;
+            border: 5px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            padding: 10px; /* Ajoute un peu de marge autour du QR code */
+            background-color: var(--white);
+            box-shadow: var(--box-shadow);
+        }
+
+        .donation-box p {
+            font-size: 1.1em;
+            margin-top: 1rem;
+            font-weight: bold;
+            color: var(--dark-gray);
+        }
+
+        .testimonial {
+            background-color: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .testimonial p {
+            margin: 0 0 0.5rem 0;
+        }
+
+        .testimonial footer {
+            text-align: right;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        footer nav ul li a {
+            color: var(--white);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            main {
+                grid-template-columns: 1fr; /* Une seule colonne sur petits écrans */
+            }
+            .hero-section h2 {
+                font-size: 2.5em;
+            }
+            .hero-section p {
+                font-size: 1.1em;
+            }
+            nav ul {
+                flex-direction: column;
+            }
+            nav ul li {
+                margin: 5px 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2em;
+            }
+            header p {
+                font-size: 1em;
+            }
+            .hero-section {
+                padding: 3rem 1rem;
+            }
+            .hero-section h2 {
+                font-size: 2em;
+            }
+            .hero-section p {
+                font-size: 1em;
+            }
+            .cta-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 1em;
+            }
+            main {
+                padding: 1rem;
+            }
+            .content-section, aside {
+                padding: 1.5rem;
+            }
+            .feature-item {
+                padding: 1rem;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ici, vous pourriez avoir une logique JS pour générer dynamiquement le QR code
+            // ou pour des interactions spécifiques. Pour un QR code de donation simple,
+            // l'image statique est souvent suffisante.
+            // Par exemple, si vous voulez mettre à jour le QR code en fonction de la devise:
+            // const donationAmount = 20; // Exemple
+            // const qrCodeUrl = `https://votre-plateforme-paiement.com/don?amount=${donationAmount}&currency=EUR`;
+            // document.getElementById('qr-code-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrCodeUrl)}`;
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>SolidarityConnect</h1>
+            <p>L'Intelligence Artificielle au Cœur de la Générosité Programmée</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <h2 class="visually-hidden">Navigation Principale</h2> <ul>
+                <li><a href="#about" aria-label="Découvrir notre mission">Notre Mission</a></li>
+                <li><a href="#features" aria-label="Explorer les piliers d'action">Nos Actions</a></li>
+                <li><a href="#impact" aria-label="Comprendre notre impact social">Impact</a></li>
+                <li><a href="#contact" aria-label="Nous contacter">Contact</a></li>
+                <li><a href="#donate" aria-label="Faire un don et soutenir le projet">Faire un Don</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-section" role="region" aria-labelledby="hero-title">
+            <h2 id="hero-title">Révolutionnons la Solidarité par l'IA</h2>
+            <p>SolidarityConnect met la technologie au service de l'humain pour l'emploi, la formation et la lutte contre la précarité.</p>
+            <a href="#about" class="cta-button" aria-label="En savoir plus sur SolidarityConnect">Découvrez notre Vision</a>
+        </section>
+
+        <article class="content-section" id="about" role="article" aria-labelledby="about-title">
+            <h2 id="about-title">Notre Mission : Connecter les Besoins et les Solutions avec Intelligence</h2>
+            <p>Face à des défis sociaux complexes, **SolidarityConnect** développe une plateforme innovante où l'**intelligence artificielle (IA)** agit comme un catalyseur. Notre objectif est de **faciliter un accès juste et équitable** aux opportunités de formation, aux offres d'emploi, et aux dispositifs d'aide sociale.</p>
+            <p>Nous transformons la générosité en une action **programmée, proactive et optimisée**, garantissant que chaque ressource, chaque opportunité, trouve la personne qui en a le plus besoin, au moment le plus opportun. Il ne s'agit pas de remplacer l'humain, mais de **démultiplier son impact**.</p>
+        </article>
+
+        <section class="content-section" id="features" role="region" aria-labelledby="features-title">
+            <h2 id="features-title">L'IA au Cœur de Nos Actions</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3 id="feature-formation">Formation Personnalisée</h3>
+                    <p>L'IA diagnostique les compétences et recommande des parcours de formation sur mesure, adaptés aux besoins individuels et aux exigences du marché du travail.</p>
+                </div>
+                <div class="feature-item">
+                    <h3 id="feature-emploi">Emploi Intelligent</h3>
+                    <p>Grâce à des algorithmes de matching avancés, nous connectons efficacement les talents avec les opportunités professionnelles, favorisant l'insertion durable.</p>
+                </div>
+                <div class="feature-item">
+                    <h3 id="feature-poverty">Lutte Contre la Précarité</h3>
+                    <p>L'IA cartographie les aides disponibles, prédit les risques de précarité et oriente les personnes vers les dispositifs d'urgence et d'accompagnement.</p>
+                </div>
+            </div>
+        </section>
+
+        <aside role="complementary" aria-labelledby="sidebar-title">
+            <h2 id="sidebar-title">Soutenez SolidarityConnect</h2>
+            
+            <div class="donation-box" id="donate">
+                <h3>Votre Générosité, Optimisée par l'IA</h3>
+                <p>Découvrez comment l'IA simplifie et sécurise les transactions financières, rendant votre soutien plus accessible que jamais. **Scannez le QR Code** ci-dessous pour faire un don rapide et contribuer directement à nos actions.</p>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://www.example.com/donate-solidarityconnect" alt="QR Code pour faire un don à SolidarityConnect" id="qr-code-img">
+                <p>Chaque don est un pas de plus vers une société plus juste et solidaire, propulsée par l'intelligence collective et artificielle.</p>
+                <a href="https://www.example.com/donate-solidarityconnect" target="_blank" rel="noopener noreferrer" class="cta-button" style="background-color: var(--primary-color); color: var(--white); font-size: 0.9em;">Faire un don via le navigateur</a>
+            </div>
+
+            <section class="testimonial" role="region" aria-labelledby="testimonial-title">
+                <h2 id="testimonial-title" class="visually-hidden">Témoignages</h2> <p>"Grâce à SolidarityConnect, j'ai trouvé la formation idéale pour ma reconversion et un emploi qui correspond enfin à mes aspirations. L'accompagnement personnalisé via l'IA a fait toute la différence !"</p>
+                <footer>— Anonyme, Bénéficiaire du programme</footer>
+            </section>
+        </aside>
+
+        <section class="content-section" id="impact" role="region" aria-labelledby="impact-title" style="grid-column: 1 / -1;">
+            <h2 id="impact-title">Notre Impact Mesurable</h2>
+            <p>SolidarityConnect s'engage pour des résultats concrets. En optimisant les processus et en personnalisant l'accompagnement, nous visons à :</p>
+            <ul>
+                <li>**Réduire de X% le temps d'accès** aux dispositifs d'aide et de formation.</li>
+                <li>**Augmenter de Y% le taux d'insertion professionnelle** des personnes accompagnées.</li>
+                <li>**Améliorer la coordination entre Z acteurs** sociaux pour une meilleure efficacité.</li>
+            </ul>
+            <p>Chaque euro et chaque donnée (anonymisée) contribuent à renforcer cette chaîne de solidarité intelligente. Découvrez nos rapports d'impact détaillés dans la section "Actualités" (à venir).</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <nav aria-label="Liens de pied de page">
+                <ul>
+                    <li><a href="/mentions-legales" aria-label="Consulter les mentions légales">Mentions Légales</a></li>
+                    <li><a href="/politique-confidentialite" aria-label="Consulter notre politique de confidentialité">Confidentialité</a></li>
+                    <li id="contact"><a href="mailto:contact@solidarityconnect.org" aria-label="Nous envoyer un email">contact@solidarityconnect.org</a></li>
+                    <li><a href="https://github.com/SolidarityConnect" target="_blank" rel="noopener noreferrer" aria-label="Visiter notre dépôt GitHub">GitHub</a></li>
+                </ul>
+            </nav>
+            <p>&copy; 2025 SolidarityConnect. Tous droits réservés. Construit avec ❤️ et IA.</p>
+        </div>
+    </footer>
+</body>
+</html>
