@@ -1,0 +1,491 @@
+/* public/css/style.css */
+
+/* --- General Body and Container Styles --- */
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to right, #f8fafc, #edf2f7); /* Doux dégradé de fond */
+    margin: 0;
+    padding: 0;
+    /* Ces propriétés sont plus pour une application avec sidebar.
+       Pour l'index.html, on les retire ou adapte pour un flux vertical standard. */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: flex-start; */
+    min-height: 100vh;
+    color: #334155; /* Couleur de texte plus douce */
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto; /* Centrage */
+    padding: 20px 0; /* Padding vertical */
+    /* Ces styles sont plus pour le container d'une application interne */
+    /* background: #ffffff; */
+    /* border-radius: 12px; */
+    /* box-shadow: 0 10px 30px rgba(0,0,0,0.08); */
+    /* margin: 2.5rem 1.5rem; */
+    /* overflow: hidden; */
+}
+
+/* --- Typographie --- */
+h1, h2, h3 {
+    font-family: 'Inter', sans-serif;
+    color: #0A3D62; /* Bleu Azur/Marin pour les titres, couleur du PA */
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 3.2rem; /* Taille plus grande pour le titre principal */
+    line-height: 1.2;
+    text-align: center; /* Centré pour la section hero */
+}
+
+h2 {
+    font-size: 2.4rem; /* Taille de police plus grande */
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    text-align: center;
+    font-weight: 700; /* Plus de gras */
+    letter-spacing: -0.02em; /* Léger espacement pour un look moderne */
+    color: #0A3D62; /* Couleur du PA */
+}
+
+h3 {
+    font-size: 1.6rem;
+    font-weight: 600; /* Plus de gras */
+    color: #E67A2F; /* Orange Doux du PA pour les sous-titres/éléments clés */
+}
+
+p {
+    font-size: 1.1rem; /* Taille de police légèrement augmentée */
+    line-height: 1.7; /* Interlignage amélioré */
+    margin-bottom: 1rem;
+    color: #4a5568; /* Gris pour le texte courant */
+}
+
+.subtitle {
+    font-size: 1.4rem;
+    color: #64748b; /* Gris plus chaud */
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.highlight {
+    color: #E67A2F; /* Orange Doux du PA */
+}
+
+.amount {
+    font-weight: 800; /* Extra gras */
+    color: #0A3D62; /* Bleu Azur/Marin du PA */
+}
+
+/* --- Sections Générales --- */
+section {
+    padding: 80px 0;
+}
+
+section:nth-of-type(even) {
+    background-color: #f0f4f8; /* Légère variation de fond pour alterner les sections */
+}
+
+.section-header { /* Style pour les h2 dans les sections */
+    border-bottom: 2px solid #e2e8f0; /* Bordure plus douce */
+}
+
+
+/* --- Header --- */
+.main-header {
+    background-color: #0A3D62; /* Bleu Azur/Marin du PA */
+    color: white;
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 20px; /* Ajoute un padding horizontal pour le header */
+}
+
+.main-header .logo {
+    display: flex;
+    align-items: center;
+}
+
+.main-header .logo img {
+    height: 40px;
+    margin-right: 10px;
+    filter: brightness(0) invert(1); /* Rend l'image blanche si elle est sombre */
+}
+
+.main-header .logo h1 {
+    color: white;
+    font-size: 1.8em;
+    margin: 0;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.main-nav a {
+    color: white;
+    font-weight: 600;
+    padding: 8px 15px; /* Padding légèrement augmenté */
+    border-radius: 8px; /* Plus arrondis */
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.main-nav a:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.main-nav a.active { /* Style pour le lien actif dans la navigation principale */
+    background-color: #E67A2F; /* Orange Doux du PA */
+    color: white;
+    font-weight: 700;
+}
+
+
+/* --- Boutons (reprend les styles .welcome-button) --- */
+.welcome-button {
+    display: inline-block;
+    padding: 1.1rem 2.5rem;
+    border-radius: 10px; /* Plus arrondis */
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin: 0.7rem;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    cursor: pointer; /* Assure que le curseur est un pointeur */
+}
+
+.welcome-button.primary {
+    background-color: #0A3D62; /* Bleu Azur/Marin du PA */
+    color: white;
+    border: none;
+}
+
+.welcome-button.primary:hover {
+    background-color: #1A5276; /* Nuance plus foncée du bleu */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.welcome-button.secondary {
+    background-color: white;
+    color: #0A3D62; /* Bleu Azur/Marin du PA */
+    border: 2px solid #0A3D62;
+}
+
+.welcome-button.secondary:hover {
+    background-color: #ebf8ff; /* Bleu très clair au survol */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/* --- Section Hero --- */
+.hero-section {
+    background: linear-gradient(to right, #e0eff5, #f5fafd); /* Dégradé doux */
+    padding: 80px 0;
+    text-align: center;
+}
+
+.hero-section .container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    text-align: left; /* Réaligne le texte à gauche dans le bloc de contenu */
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-image {
+    flex: 1;
+    text-align: center;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px; /* Plus arrondis */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* Ombre plus prononcée */
+}
+
+.hero-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* --- Card Styles (appliqués aux feature-item, ia-point) --- */
+.card {
+    background-color: #fdfdfd; /* Fond très clair pour les cartes */
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 2rem; /* Permet un espacement vertical si non dans une grille */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06); /* Ombre plus douce */
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Effet de soulèvement au survol */
+}
+
+/* --- Sections de Features --- */
+.features-section .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px; /* Espace après le titre de section */
+}
+
+.feature-item img {
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+.feature-item h3 {
+    margin-top: 0;
+    color: #0A3D62; /* Titres de features en bleu */
+}
+
+/* --- Section IA --- */
+.impact-ia-section .container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+}
+
+.ia-content {
+    flex: 2;
+}
+
+.ia-image {
+    flex: 1;
+    text-align: center;
+}
+
+.ia-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.ia-points {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.ia-point {
+    flex: 1;
+    min-width: 250px;
+}
+
+.ia-point img {
+    height: 50px;
+    margin-bottom: 15px;
+}
+
+/* --- Section Capital de Solidarité --- */
+.solidarity-capital-section {
+    background-color: #0A3D62; /* Fond bleu pour cette section clé, couleur du PA */
+    color: white;
+    text-align: center;
+}
+
+.solidarity-capital-section h2 {
+    color: white; /* Titre en blanc sur fond bleu */
+}
+
+.solidarity-capital-section p {
+    color: #e0eff5; /* Texte plus clair */
+    max-width: 800px;
+    margin: 0 auto 30px auto;
+}
+
+.capital-points ul {
+    list-style: none;
+    padding: 0;
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.capital-points li {
+    background-color: rgba(255,255,255,0.1); /* Fond semi-transparent */
+    padding: 15px 25px;
+    border-radius: 10px; /* Plus arrondis */
+    border: 1px solid rgba(255,255,255,0.2);
+    font-weight: 600;
+    font-size: 1.1em;
+    flex: 1;
+    min-width: 280px;
+    color: white; /* Texte en blanc */
+}
+
+/* --- Section Call to Action --- */
+.call-to-action-section {
+    text-align: center;
+    background-color: #F8F8F8;
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+.call-to-action-section h2 {
+    color: #E67A2F; /* Orange Doux du PA */
+}
+
+.cta-buttons {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* --- Footer --- */
+.main-footer {
+    background-color: #0A3D62;
+    color: white;
+    padding: 30px 0;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.main-footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-links p {
+    color: white; /* Assure le texte du copyright en blanc */
+}
+
+.footer-links ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.footer-links a {
+    color: white;
+    opacity: 0.8;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.footer-links a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.social-media {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.social-media img {
+    height: 24px;
+    width: 24px;
+    filter: brightness(0) invert(1); /* Rend les icônes blanches */
+    transition: transform 0.3s ease;
+}
+
+.social-media img:hover {
+    transform: scale(1.1);
+}
+
+
+/* --- Responsive adjustments --- */
+@media (max-width: 992px) {
+    .main-nav ul {
+        gap: 15px;
+    }
+    .hero-section .container,
+    .impact-ia-section .container {
+        flex-direction: column; /* Passe en colonne sur les écrans moyens */
+        text-align: center;
+    }
+    .hero-content, .ia-content {
+        order: 2; /* Met le texte en dessous de l'image */
+    }
+    .hero-image, .ia-image {
+        order: 1; /* Met l'image au-dessus du texte */
+    }
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .main-nav ul {
+        flex-direction: column;
+        margin-top: 15px;
+        gap: 10px;
+    }
+    .main-nav a.welcome-button {
+        margin: 0.5rem 0; /* Ajuste la marge des boutons dans la nav sur mobile */
+    }
+    .hero-section, .features-section, .impact-ia-section,
+    .solidarity-capital-section, .call-to-action-section {
+        padding: 40px 0;
+    }
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.6em; }
+    .subtitle { font-size: 1.1em; }
+    .hero-actions, .cta-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .features-section .feature-grid, .ia-points {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .capital-points ul li {
+        min-width: unset;
+        flex: unset;
+        width: 100%;
+    }
+    .main-footer .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer-links ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .social-media {
+        margin-top: 20px;
+    }
+}

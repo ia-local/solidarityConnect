@@ -1,0 +1,392 @@
+/* public/css/components.css */
+
+/* --- Header --- */
+.main-header {
+    background-color: #0A3D62; /* Bleu Azur/Marin */
+    color: white;
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Pour la responsivité */
+}
+
+.main-header .logo {
+    display: flex;
+    align-items: center;
+}
+
+.main-header .logo img {
+    height: 40px;
+    margin-right: 10px;
+    filter: brightness(0) invert(1); /* Rend l'image blanche si elle est sombre */
+}
+
+.main-header .logo h1 {
+    color: white;
+    font-size: 1.8em;
+    margin: 0;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.main-nav a {
+    color: white;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.btn:hover { /* S'assurer que les boutons dans la nav ont un bon hover */
+    background-color: rgba(255,255,255,0.2);
+}
+
+/* --- Boutons --- */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-main {
+    background-color: #E67A2F; /* Orange Doux */
+    color: white;
+}
+
+.btn-main:hover {
+    background-color: #FF8C42; /* Orange plus clair au survol */
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: #0A3D62; /* Bleu Azur/Marin */
+    border: 2px solid #0A3D62;
+}
+
+.btn-secondary:hover {
+    background-color: #0A3D62;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-primary { /* Utilisé pour le bouton Mon Profil */
+    background-color: white;
+    color: #0A3D62;
+    border: 2px solid white;
+}
+
+.btn-primary:hover {
+    background-color: #F0F5F9;
+    color: #0A3D62;
+}
+
+.btn-ia-more { /* Bouton spécifique pour la section IA */
+    background-color: #3C6382; /* Une nuance de bleu plus foncée */
+    color: white;
+}
+.btn-ia-more:hover {
+    background-color: #5A83A0;
+}
+
+
+/* --- Section Hero --- */
+.hero-section {
+    background: linear-gradient(to right, #e0eff5, #f5fafd); /* Dégradé doux */
+    padding: 80px 0;
+    text-align: center;
+}
+
+.hero-section .container {
+    display: flex;
+    flex-direction: row; /* Par défaut côte à côte */
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    text-align: left; /* Réaligne le texte à gauche dans le bloc de contenu */
+}
+
+.hero-content {
+    flex: 1; /* Prend l'espace disponible */
+}
+
+.hero-image {
+    flex: 1;
+    text-align: center;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.hero-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    justify-content: center; /* Centrer les boutons dans le bloc hero */
+    flex-wrap: wrap;
+}
+
+/* --- Sections de Features --- */
+.features-section .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.feature-item {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+}
+
+.feature-item img {
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+.feature-item h3 {
+    margin-top: 0;
+    color: #0A3D62; /* Titres de features en bleu */
+}
+
+/* --- Section IA --- */
+.impact-ia-section .container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+}
+
+.ia-content {
+    flex: 2; /* Plus de largeur pour le texte IA */
+}
+
+.ia-image {
+    flex: 1;
+    text-align: center;
+}
+
+.ia-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.ia-points {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.ia-point {
+    flex: 1;
+    min-width: 250px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.ia-point img {
+    height: 50px;
+    margin-bottom: 15px;
+}
+
+/* --- Section Capital de Solidarité --- */
+.solidarity-capital-section {
+    background-color: #0A3D62; /* Fond bleu pour cette section clé */
+    color: white;
+    text-align: center;
+}
+
+.solidarity-capital-section h2 {
+    color: white; /* Titre en blanc sur fond bleu */
+}
+
+.solidarity-capital-section p {
+    color: #e0eff5; /* Texte plus clair */
+    max-width: 800px;
+    margin: 0 auto 30px auto;
+}
+
+.capital-points ul {
+    list-style: none;
+    padding: 0;
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.capital-points li {
+    background-color: rgba(255,255,255,0.1); /* Fond semi-transparent */
+    padding: 15px 25px;
+    border-radius: 5px;
+    border: 1px solid rgba(255,255,255,0.2);
+    font-weight: 600;
+    font-size: 1.1em;
+    flex: 1;
+    min-width: 280px;
+}
+
+/* --- Section Call to Action --- */
+.call-to-action-section {
+    text-align: center;
+    background-color: #F8F8F8;
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+.call-to-action-section h2 {
+    color: #E67A2F;
+}
+
+.cta-buttons {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* --- Footer --- */
+.main-footer {
+    background-color: #0A3D62;
+    color: white;
+    padding: 30px 0;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.main-footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-links ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.footer-links a {
+    color: white;
+    opacity: 0.8;
+}
+
+.footer-links a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.social-media {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.social-media img {
+    height: 24px;
+    width: 24px;
+    filter: brightness(0) invert(1);
+    transition: transform 0.3s ease;
+}
+
+.social-media img:hover {
+    transform: scale(1.1);
+}
+
+
+/* --- Médias Queries pour la responsivité --- */
+@media (max-width: 992px) {
+    .main-nav ul {
+        gap: 15px;
+    }
+    .hero-section .container,
+    .impact-ia-section .container {
+        flex-direction: column; /* Passe en colonne sur les écrans moyens */
+        text-align: center;
+    }
+    .hero-content, .ia-content {
+        order: 2; /* Met le texte en dessous de l'image */
+    }
+    .hero-image, .ia-image {
+        order: 1; /* Met l'image au-dessus du texte */
+    }
+}
+
+@media (max-width: 768px) {
+    .main-header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .main-nav ul {
+        flex-direction: column;
+        margin-top: 15px;
+        gap: 10px;
+    }
+    .hero-section, .features-section, .impact-ia-section,
+    .solidarity-capital-section, .call-to-action-section {
+        padding: 40px 0;
+    }
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.6em; }
+    .subtitle { font-size: 1.1em; }
+    .hero-actions, .cta-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .feature-grid, .ia-points {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .capital-points ul li {
+        min-width: unset;
+        flex: unset;
+        width: 100%;
+    }
+    .main-footer .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer-links ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .social-media {
+        margin-top: 20px;
+    }
+}
