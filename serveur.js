@@ -4,31 +4,32 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs').promises;
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const Groq = require('groq-sdk'); // Importe le SDK Groq
+const Groq = require('groq-sdk');
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Initialisation du SDK Google Generative AI
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const geminiModel = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }); // Modèle Gemini Pro
+const geminiModel = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-// Initialisation du SDK Groq
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY }); // Modèle Groq (gemma2-9b-it)
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 // Chemins vers les fichiers de données
 const DB_ARTICLES_PATH = path.join(__dirname, 'data', 'db_articles.json');
 const POVERTY_REGIONS_PATH = path.join(__dirname, 'data', 'poverty_regions.json');
 const BENEFICIARY_LOCATIONS_PATH = path.join(__dirname, 'data', 'beneficiary_locations.json');
-// Dans server.js, ajoutez cette ligne avant app.get('*', ...)
-app.get('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, 'admin', 'admin.html'));
-});
+
 // Middleware pour parser les requêtes JSON
 app.use(express.json());
-// Servir les fichiers statiques depuis le répertoire 'docs'
+
+// --- SERVIR LES FICHIERS STATIQUES ---
+// Servir les fichiers statiques depuis le répertoire 'docs' (pour l'application front-end)
 app.use(express.static(path.join(__dirname, 'docs')));
+// NOUVEAU : Servir les fichiers statiques depuis le répertoire 'admin' (pour le tableau de bord admin)
+// Cela permet de servir admin.html, dashboard.js, et tout autre asset dans le dossier admin/
+app.use('/admin', express.static(path.join(__dirname, 'admin')));
+
 
 // --- Fonctions utilitaires pour la gestion des articles ---
 async function readArticles() {
@@ -215,6 +216,11 @@ app.post('/api/ai-chat', async (req, res) => {
         if (error.response && error.response.data) { console.error("Détails de l'erreur API:", error.response.data); }
         res.status(500).json({ error: "Erreur interne du serveur lors de l'interaction avec l'IA." });
     }
+});
+
+// Route spécifique pour servir admin.html
+app.get('/admin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin', 'admin.html'));
 });
 
 // Route par défaut (fallback pour le SPA)
