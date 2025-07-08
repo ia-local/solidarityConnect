@@ -14,13 +14,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const adminUpdateArticleBtn = document.getElementById('admin-update-article-btn');
     const adminCancelEditBtn = document.getElementById('admin-cancel-edit-btn');
 
+    // --- Nouveaux éléments pour l'aperçu des intégrations ---
+    const telegramStatusElem = document.getElementById('telegram-status');
+    const telegramLastActivityElem = document.getElementById('telegram-last-activity');
+    const youtubeChannelNameElem = document.getElementById('youtube-channel-name');
+    const youtubeSubscribersElem = document.getElementById('youtube-subscribers');
+    const youtubeTotalViewsElem = document.getElementById('youtube-total-views');
+    const githubRepoLinkElem = document.getElementById('github-repo-link');
+    const githubLastCommitElem = document.getElementById('github-last-commit');
+
+
     // Fonction pour afficher une section du dashboard
     function showDashboardSection(sectionId) {
+        // Supprime la classe 'active' de toutes les sections
         dashboardSections.forEach(section => {
             section.classList.remove('active');
         });
+        // Ajoute la classe 'active' à la section demandée
         document.getElementById(sectionId).classList.add('active');
 
+        // Met à jour la classe 'active' pour les liens de navigation
         navLinks.forEach(link => {
             link.classList.remove('active');
             if (link.dataset.section === sectionId) {
@@ -30,24 +43,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Actions spécifiques au chargement de certaines sections
         if (sectionId === 'articles-management') {
-            loadAdminArticles(); // Charger les articles pour la gestion
+            loadAdminArticles(); // Charge les articles pour la gestion
+        }
+        if (sectionId === 'overview-dashboard') {
+            loadDashboardOverview(); // Charge les données de l'aperçu général
         }
         // Ajoutez ici d'autres logiques de chargement pour d'autres sections
-        if (sectionId === 'overview-dashboard') {
-            loadDashboardOverview();
-        }
     }
 
     // --- Logique pour l'Aperçu du Dashboard ---
     async function loadDashboardOverview() {
-        // Simuler le chargement de données pour l'aperçu
+        // Simule le chargement de données pour l'aperçu général
         document.getElementById('total-beneficiaries').textContent = 'Chargement...';
         document.getElementById('monthly-donations').textContent = 'Chargement...';
         document.getElementById('completed-trainings').textContent = 'Chargement...';
         document.getElementById('recent-activity').innerHTML = '<li>Chargement des activités...</li>';
 
-        await new Promise(resolve => setTimeout(resolve, 500)); // Simuler un délai réseau
+        // Simule le chargement des données Telegram, YouTube, GitHub
+        telegramStatusElem.textContent = 'Chargement...';
+        telegramLastActivityElem.textContent = 'Chargement...';
+        youtubeChannelNameElem.textContent = 'Chargement...';
+        youtubeSubscribersElem.textContent = 'Chargement...';
+        youtubeTotalViewsElem.textContent = 'Chargement...';
+        githubLastCommitElem.textContent = 'Chargement...';
 
+
+        await new Promise(resolve => setTimeout(resolve, 500)); // Simule un délai réseau
+
+        // Données simulées pour l'aperçu général
         document.getElementById('total-beneficiaries').textContent = '125';
         document.getElementById('monthly-donations').textContent = '€ 5,780';
         document.getElementById('completed-trainings').textContent = '42';
@@ -57,6 +80,16 @@ document.addEventListener('DOMContentLoaded', () => {
             <li>Bénéficiaire Marie D. a complété sa formation.</li>
             <li>Nouvel utilisateur enregistré : Paul S.</li>
         `;
+
+        // Données simulées pour les intégrations
+        telegramStatusElem.textContent = 'Actif ✅';
+        telegramLastActivityElem.textContent = 'Il y a 5 minutes';
+        youtubeChannelNameElem.textContent = 'IA_SolidarityConnect';
+        youtubeSubscribersElem.textContent = '1,250';
+        youtubeTotalViewsElem.textContent = '87,500';
+        githubRepoLinkElem.textContent = 'ia-local/solidarityConnect'; // Le texte du lien
+        githubRepoLinkElem.href = 'https://github.com/ia-local/solidarityConnect'; // L'URL du lien
+        githubLastCommitElem.textContent = '2 jours ago (feat: int. youtube)'; // Exemple de dernier commit
     }
 
     // --- Fonctions pour la gestion des articles (CRUD) dans l'admin ---
@@ -76,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            adminArticlesList.innerHTML = ''; // Vider le conteneur
+            adminArticlesList.innerHTML = ''; // Vide le conteneur
             articles.forEach(article => {
                 const articleDiv = document.createElement('div');
                 articleDiv.classList.add('p-4', 'mb-4', 'bg-white', 'rounded-md', 'shadow-sm', 'border', 'border-gray-200', 'flex', 'justify-between', 'items-center');
@@ -94,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 adminArticlesList.appendChild(articleDiv);
             });
 
-            // Attacher les écouteurs d'événements aux nouveaux boutons
+            // Attache les écouteurs d'événements aux nouveaux boutons
             document.querySelectorAll('.admin-edit-article-btn').forEach(button => {
                 button.addEventListener('click', (e) => editAdminArticle(e.target.dataset.id));
             });
@@ -133,14 +166,14 @@ document.addEventListener('DOMContentLoaded', () => {
             adminArticleTitleInput.value = '';
             adminArticleContentInput.value = '';
             adminArticleAuthorInput.value = '';
-            loadAdminArticles(); // Recharger la liste des articles
+            loadAdminArticles(); // Recharge la liste des articles
         } catch (error) {
             console.error('Erreur lors de l\'ajout de l\'article:', error);
             alert('Erreur lors de l\'ajout de l\'article.');
         }
     });
 
-    // Pré-remplir le formulaire pour modifier un article
+    // Pré-remplit le formulaire pour modifier un article
     async function editAdminArticle(id) {
         try {
             const response = await fetch('/api/articles');
@@ -163,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Mettre à jour un article
+    // Met à jour un article
     adminUpdateArticleBtn.addEventListener('click', async () => {
         const id = adminArticleIdInput.value;
         const title = adminArticleTitleInput.value.trim();
@@ -186,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            // Réinitialiser le formulaire
+            // Réinitialise le formulaire
             adminArticleIdInput.value = '';
             adminArticleTitleInput.value = '';
             adminArticleContentInput.value = '';
@@ -194,14 +227,14 @@ document.addEventListener('DOMContentLoaded', () => {
             adminAddArticleBtn.classList.remove('hidden');
             adminUpdateArticleBtn.classList.add('hidden');
             adminCancelEditBtn.classList.add('hidden');
-            loadAdminArticles(); // Recharger la liste
+            loadAdminArticles(); // Recharge la liste
         } catch (error) {
             console.error('Erreur lors de la mise à jour de l\'article:', error);
             alert('Erreur lors de la mise à jour de l\'article.');
         }
     });
 
-    // Annuler la modification
+    // Annule la modification
     adminCancelEditBtn.addEventListener('click', () => {
         adminArticleIdInput.value = '';
         adminArticleTitleInput.value = '';
@@ -212,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
         adminCancelEditBtn.classList.add('hidden');
     });
 
-    // Supprimer un article
+    // Supprime un article
     async function deleteAdminArticle(id) {
         if (!confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
             return;
@@ -226,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            loadAdminArticles(); // Recharger la liste
+            loadAdminArticles(); // Recharge la liste
         } catch (error) {
             console.error('Erreur lors de la suppression de l\'article:', error);
             alert('Erreur lors de la suppression de l\'article.');
@@ -245,6 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Initialisation : afficher la section d'aperçu par défaut
+    // Initialisation : affiche la section d'aperçu par défaut
     showDashboardSection('overview-dashboard');
 });
