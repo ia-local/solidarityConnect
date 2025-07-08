@@ -170,6 +170,9 @@
                     <a href="#" data-section="users-management">
                         <i class="fas fa-users"></i> Gestion des Utilisateurs
                     </a>
+                    <a href="#" data-section="accounting-treasury-management">
+                        <i class="fas fa-wallet"></i> Comptabilité & Trésorerie
+                    </a>
                     <a href="#" data-section="analytics-reports">
                         <i class="fas fa-chart-pie"></i> Rapports & Analyses
                     </a>
@@ -204,14 +207,14 @@
                             <p class="text-3xl font-bold text-yellow-900" id="completed-trainings">...</p>
                         </div>
                         
-                        <!-- NOUVEAU: Section pour le statut Telegram -->
+                        <!-- Section pour le statut Telegram -->
                         <div class="bg-purple-100 p-4 rounded-lg shadow-sm">
                             <h3 class="text-purple-800"><i class="fab fa-telegram-plane mr-2"></i>Bot Telegram</h3>
                             <p class="text-xl font-bold text-purple-900" id="telegram-status">...</p>
                             <p class="text-sm text-gray-600 mt-2">Dernière activité : <span id="telegram-last-activity">...</span></p>
                         </div>
 
-                        <!-- NOUVEAU: Section pour YouTube -->
+                        <!-- Section pour YouTube -->
                         <div class="bg-red-100 p-4 rounded-lg shadow-sm">
                             <h3 class="text-red-800"><i class="fab fa-youtube mr-2"></i>Chaîne YouTube</h3>
                             <p class="text-xl font-bold text-red-900" id="youtube-channel-name">...</p>
@@ -219,7 +222,7 @@
                             <p class="text-sm text-gray-600">Vues totales : <span id="youtube-total-views">...</span></p>
                         </div>
 
-                        <!-- NOUVEAU: Section pour GitHub -->
+                        <!-- Section pour GitHub -->
                         <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
                             <h3 class="text-gray-800"><i class="fab fa-github mr-2"></i>Dépôt GitHub</h3>
                             <a href="https://github.com/ia-local/solidarityConnect" target="_blank" class="text-blue-600 hover:underline" id="github-repo-link">
@@ -263,6 +266,55 @@
                     <p>Visualisez et gérez les utilisateurs de la plateforme (bénéficiaires, donateurs, administrateurs).</p>
                     <div id="users-list" class="mt-4">
                         <p class="text-center text-gray-500">Chargement des utilisateurs...</p>
+                    </div>
+                </section>
+
+                <!-- NOUVELLE SECTION: Comptabilité & Trésorerie -->
+                <section id="accounting-treasury-management" class="dashboard-section">
+                    <h2>💰 Comptabilité & Trésorerie</h2>
+                    <p>Suivez les flux financiers, la générosité programmée et la trésorerie de Solidarity Connect.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                        <div class="bg-blue-100 p-4 rounded-lg shadow-sm">
+                            <h3 class="text-blue-800">Total Collecté</h3>
+                            <p class="text-3xl font-bold text-blue-900" id="total-collected">...</p>
+                        </div>
+                        <div class="bg-red-100 p-4 rounded-lg shadow-sm">
+                            <h3 class="text-red-800">Total Décaissement</h3>
+                            <p class="text-3xl font-bold text-red-900" id="total-disbursed">...</p>
+                        </div>
+                        <div class="bg-green-100 p-4 rounded-lg shadow-sm">
+                            <h3 class="text-green-800">Solde Actuel</h3>
+                            <p class="text-3xl font-bold text-green-900" id="current-balance">...</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <h3>Générosité Programmée</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                            <div class="bg-purple-100 p-4 rounded-lg shadow-sm">
+                                <h4 class="text-purple-800">Donateurs Récurrents Actifs</h4>
+                                <p class="text-2xl font-bold text-purple-900" id="recurring-donors">...</p>
+                            </div>
+                            <div class="bg-teal-100 p-4 rounded-lg shadow-sm">
+                                <h4 class="text-teal-800">Engagement Mensuel Récurrent</h4>
+                                <p class="text-2xl font-bold text-teal-900" id="monthly-recurring-commitment">...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <h3>Répartition des Fonds</h3>
+                        <div class="bg-gray-100 h-64 flex items-center justify-center rounded-md">
+                            <p>Graphique de répartition (ex: Camembert) ici</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <h3>Transactions Récentes</h3>
+                        <ul id="recent-transactions" class="list-disc list-inside bg-gray-50 p-4 rounded-lg">
+                            <li>Chargement des transactions...</li>
+                        </ul>
                     </div>
                 </section>
 

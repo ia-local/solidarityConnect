@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const adminUpdateArticleBtn = document.getElementById('admin-update-article-btn');
     const adminCancelEditBtn = document.getElementById('admin-cancel-edit-btn');
 
-    // --- Nouveaux éléments pour l'aperçu des intégrations ---
+    // --- Éléments pour l'aperçu des intégrations (existants) ---
     const telegramStatusElem = document.getElementById('telegram-status');
     const telegramLastActivityElem = document.getElementById('telegram-last-activity');
     const youtubeChannelNameElem = document.getElementById('youtube-channel-name');
@@ -23,17 +23,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const githubRepoLinkElem = document.getElementById('github-repo-link');
     const githubLastCommitElem = document.getElementById('github-last-commit');
 
+    // --- Nouveaux éléments pour la comptabilité et trésorerie ---
+    const totalCollectedElem = document.getElementById('total-collected');
+    const totalDisbursedElem = document.getElementById('total-disbursed');
+    const currentBalanceElem = document.getElementById('current-balance');
+    const recurringDonorsElem = document.getElementById('recurring-donors');
+    const monthlyRecurringCommitmentElem = document.getElementById('monthly-recurring-commitment');
+    const recentTransactionsList = document.getElementById('recent-transactions');
+
 
     // Fonction pour afficher une section du dashboard
     function showDashboardSection(sectionId) {
-        // Supprime la classe 'active' de toutes les sections
         dashboardSections.forEach(section => {
             section.classList.remove('active');
         });
-        // Ajoute la classe 'active' à la section demandée
         document.getElementById(sectionId).classList.add('active');
 
-        // Met à jour la classe 'active' pour les liens de navigation
         navLinks.forEach(link => {
             link.classList.remove('active');
             if (link.dataset.section === sectionId) {
@@ -47,6 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (sectionId === 'overview-dashboard') {
             loadDashboardOverview(); // Charge les données de l'aperçu général
+        }
+        if (sectionId === 'accounting-treasury-management') {
+            loadAccountingTreasuryData(); // Charge les données de comptabilité et trésorerie
         }
         // Ajoutez ici d'autres logiques de chargement pour d'autres sections
     }
@@ -91,6 +99,42 @@ document.addEventListener('DOMContentLoaded', () => {
         githubRepoLinkElem.href = 'https://github.com/ia-local/solidarityConnect'; // L'URL du lien
         githubLastCommitElem.textContent = '2 jours ago (feat: int. youtube)'; // Exemple de dernier commit
     }
+
+    // --- Logique pour la Comptabilité et la Trésorerie ---
+    async function loadAccountingTreasuryData() {
+        // Simule le chargement des données
+        totalCollectedElem.textContent = 'Chargement...';
+        totalDisbursedElem.textContent = 'Chargement...';
+        currentBalanceElem.textContent = 'Chargement...';
+        recurringDonorsElem.textContent = 'Chargement...';
+        monthlyRecurringCommitmentElem.textContent = 'Chargement...';
+        recentTransactionsList.innerHTML = '<li>Chargement des transactions...</li>';
+
+        await new Promise(resolve => setTimeout(resolve, 700)); // Simule un délai réseau plus long
+
+        // Données simulées
+        const totalCollected = 150000;
+        const totalDisbursed = 120000;
+        const currentBalance = totalCollected - totalDisbursed;
+        const recurringDonors = 345;
+        const monthlyRecurringCommitment = 4200;
+
+        totalCollectedElem.textContent = `€ ${totalCollected.toLocaleString('fr-FR')}`;
+        totalDisbursedElem.textContent = `€ ${totalDisbursed.toLocaleString('fr-FR')}`;
+        currentBalanceElem.textContent = `€ ${currentBalance.toLocaleString('fr-FR')}`;
+        recurringDonorsElem.textContent = recurringDonors;
+        monthlyRecurringCommitmentElem.textContent = `€ ${monthlyRecurringCommitment.toLocaleString('fr-FR')}`;
+
+        // Transactions récentes simulées
+        recentTransactionsList.innerHTML = `
+            <li><span class="font-semibold text-green-700">+€ 250</span> - Don ponctuel (05/07/2024)</li>
+            <li><span class="font-semibold text-red-700">-€ 1200</span> - Aide au logement (04/07/2024)</li>
+            <li><span class="font-semibold text-green-700">+€ 50</span> - Don récurrent (03/07/2024)</li>
+            <li><span class="font-semibold text-red-700">-€ 300</span> - Formation IA (01/07/2024)</li>
+            <li><span class="font-semibold text-green-700">+€ 100</span> - Don via Taxe IA (30/06/2024)</li>
+        `;
+    }
+
 
     // --- Fonctions pour la gestion des articles (CRUD) dans l'admin ---
 
