@@ -3,127 +3,417 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faire un don à SolidarityConnect</title>
-    <meta name="description" content="Soutenez SolidarityConnect et nos initiatives en faveur de la formation, de l'emploi et de la lutte contre la précarité par un don sécurisé via PayPal.">
-    <link rel="canonical" href="https://www.solidarityconnect.org/donation.html"> <style>
-        /* Styles CSS Intégrés pour une page simple et centrée */
+    <title>Solidarity Connect - Aperçu UI</title>
+    <!-- Tailwind CSS CDN pour un style rapide et responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Leaflet CSS - ATTENTION: integrity et crossorigin supprimés pour résoudre l'erreur SRI -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <style>
+        /* Styles personnalisés pour la charte graphique */
         :root {
-            --primary-color: #4CAF50; /* Vert solidarité */
-            --text-color: #333;
-            --light-bg: #f4f4f4;
-            --white: #ffffff;
-            --border-radius: 8px;
-            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --primary-blue: #3f51b5; /* Confiance, espoir */
+            --secondary-green: #4CAF50; /* Croissance, sérénité */
+            --accent-orange: #FF9800; /* Appel à l'action */
+            --text-dark: #333333;
+            --text-light: #666666;
+            --bg-light: #f4f4f4;
+            --bg-white: #ffffff;
         }
 
-        body {
-            font-family: 'Arial', sans-serif;
+        html, body {
+            height: 100%;
             margin: 0;
             padding: 0;
-            background-color: var(--light-bg);
-            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Centre le contenu verticalement */
-            align-items: center; /* Centre le contenu horizontalement */
-            min-height: 100vh; /* Prend toute la hauteur de la fenêtre */
+        }
+
+        .content-container {
+            flex-grow: 1;
+            padding-bottom: 80px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        header {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 1rem;
             text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex-shrink: 0;
         }
 
-        .donation-container {
-            background-color: var(--white);
-            padding: 30px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            max-width: 500px; /* Largeur maximale du conteneur */
-            width: 90%; /* S'adapte aux petits écrans */
+        section {
+            display: none;
+            padding: 1.5rem;
+            margin: 1rem;
+            background-color: var(--bg-white);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        h1 {
-            color: var(--primary-color);
-            font-size: 2em;
-            margin-bottom: 20px;
+        section.active {
+            display: block;
+        }
+
+        h2 {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 0.5rem;
         }
 
         p {
-            margin-bottom: 20px;
-            font-size: 1.1em;
-            line-height: 1.5;
-        }
-
-        .qr-code-box {
-            margin: 30px 0;
-        }
-
-        .qr-code-box img {
-            max-width: 100%; /* S'assure que l'image ne dépasse pas le conteneur */
-            height: auto;
-            border: 5px solid var(--primary-color);
-            border-radius: var(--border-radius);
-            padding: 10px; /* Marge autour du QR code */
-            background-color: var(--white);
-            box-shadow: var(--box-shadow);
-            display: block; /* Supprime l'espace sous l'image */
-            margin: 0 auto; /* Centre l'image si elle est plus petite que son conteneur */
-        }
-
-        .paypal-button {
-            display: inline-block;
-            background-color: #0070BA; /* Couleur officielle PayPal */
-            color: var(--white);
-            padding: 12px 25px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .paypal-button:hover, .paypal-button:focus {
-            background-color: #005EA6; /* Couleur plus foncée au survol */
-        }
-
-        .back-link {
-            display: block;
-            margin-top: 30px;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease;
-        }
-
-        .back-link:hover, .back-link:focus {
-            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 1rem;
         }
 
         footer {
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: var(--text-color);
-            opacity: 0.8;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--bg-white);
+            border-top: 1px solid #e0e0e0;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 70px;
+            z-index: 1000;
+            flex-shrink: 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 0.5rem 0;
+            color: var(--text-light);
+            font-size: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            border-radius: 0.5rem;
+            height: 100%;
+        }
+
+        .nav-item i {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-item.active {
+            color: var(--primary-blue);
+            background-color: var(--bg-light);
+        }
+
+        .nav-item:hover:not(.active) {
+            color: var(--primary-blue);
+            background-color: #f0f0f0;
+        }
+
+        .nav-item.mission-button {
+            background-color: var(--accent-orange);
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+            top: -15px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-item.mission-button:hover {
+            background-color: #e68a00;
+            transform: scale(1.05);
+        }
+
+        .nav-item.mission-button i {
+            font-size: 1.75rem;
+            margin-bottom: 0;
+        }
+
+        .chatbot-container {
+            border: 1px solid #e0e0e0;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .chat-message {
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .chat-message.user {
+            text-align: right;
+            color: var(--primary-blue);
+        }
+
+        .chat-message.ai {
+            text-align: left;
+            color: var(--secondary-green);
+        }
+
+        .chat-input-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        #chat-input {
+            flex-grow: 1;
+            min-width: 0;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        #send-chat-button {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        #send-chat-button:hover {
+            background-color: #303f9f;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--bg-white);
+            margin: auto;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .close-button {
+            color: var(--text-light);
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--text-dark);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .google-signin-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #4285F4;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            max-width: 250px;
+            margin: 1rem auto;
+        }
+
+        .google-signin-button:hover {
+            background-color: #357ae8;
+        }
+
+        .google-signin-button i {
+            margin-right: 0.5rem;
+        }
+
+        /* Style pour la carte Leaflet */
+        #map {
+            height: 400px;
+            width: 100%;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 1rem;
         }
     </style>
 </head>
 <body>
-    <div class="donation-container" role="main">
-        <h1>SolidarityConnect</h1>
-        <p>Votre générosité propulse SolidarityConnect. Chaque don nous aide à développer et déployer l'intelligence artificielle au service de la formation, de l'emploi et de la lutte contre la précarité à Bavent, en Normandie, et au-delà.</p>
-        
-        <p>Pour faire un don **simple et sécurisé**, scannez le QR code ci-dessous avec l'appareil photo de votre smartphone ou cliquez sur le bouton PayPal.</p>
+    <header>
+        <h1>Solidarity Connect</h1>
+        <p>L'IA au service de la générosité et de l'emploi.</p>
+    </header>
 
-        <div class="qr-code-box">
-            <img src="./QR.png" 
-                 alt="QR Code pour faire un don via PayPal à SolidarityConnect">
-        </div>
+    <div class="content-container">
+        <!-- Section 1: Faits d'Actualité -->
+        <section id="news-section" class="active">
+            <h2>📰 Faits d'Actualité</h2>
+            <p>Découvrez les dernières nouvelles et les réussites de notre communauté. Restez informé sur l'impact de vos contributions et les avancées de nos programmes.</p>
+            <p>Nous partageons ici des histoires inspirantes de personnes qui ont retrouvé le chemin de l'autonomie grâce à votre soutien et à l'aide de l'IA.</p>
 
-        <p>Vous n'avez pas d'application pour scanner ? Cliquez simplement ici :</p>
-        <a href="URL_DE_VOTRE_LIEN_PAYPAL_ICI" target="_blank" rel="noopener noreferrer" class="paypal-button">Merci pour votre don</a>
+            <!-- Conteneur pour les articles -->
+            <div id="articles-list" class="mt-4">
+                <p class="text-center text-gray-500">Chargement des actualités...</p>
+            </div>
 
+            <!-- Formulaire d'administration simple pour ajouter/modifier des articles (pour les tests) -->
+            <div class="admin-panel mt-8 p-4 bg-gray-100 rounded-md">
+                <h3 class="text-lg font-semibold mb-2">Gérer les Actualités (Admin)</h3>
+                <input type="hidden" id="article-id">
+                <input type="text" id="article-title" placeholder="Titre de l'article" class="w-full p-2 mb-2 border rounded">
+                <textarea id="article-content" placeholder="Contenu de l'article" rows="4" class="w-full p-2 mb-2 border rounded"></textarea>
+                <input type="text" id="article-author" placeholder="Auteur" class="w-full p-2 mb-2 border rounded">
+                <div class="flex gap-2">
+                    <button id="add-article-btn" class="bg-primary-blue hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Ajouter Article</button>
+                    <button id="update-article-btn" class="bg-secondary-green hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg hidden">Modifier Article</button>
+                    <button id="cancel-edit-btn" class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg hidden">Annuler</button>
+                </div>
+            </div>
+
+            <!-- Placeholder pour la pagination -->
+            <div class="pagination-placeholder mt-4 p-2 bg-gray-100 rounded-md text-center text-sm text-gray-600">
+                <p>--- Contenu paginé ici (pagination.js) ---</p>
+                <p>Page 1 de X</p>
+            </div>
+        </section>
+
+        <!-- Section 2: Carte Géographique -->
+        <section id="map-section">
+            <h2>🗺️ Carte Géographique</h2>
+            <p>Explorez la topologie de la pauvreté en France et visualisez où votre aide fait la différence. Notre carte interactive montre les zones de besoin et l'impact de nos actions.</p>
+            <!-- Conteneur pour la carte Leaflet -->
+            <div id="map"></div>
+            <p class="mt-4 text-sm text-gray-600">Le pouvoir d'achat dépend de la région. Un loyer à Paris n'est pas un loyer en Normandie. Nous utilisons ces données pour ajuster le "minimum viable" localement.</p>
+        </section>
+
+        <!-- Section 3: Notre Mission (Bouton central) -->
+        <section id="mission-section">
+            <h2>🤝 Notre Mission : Aider les Plus Démunis</h2>
+            <p>Notre engagement est d'offrir un droit au logement et un droit au travail rémunéré à chacun. Nous croyons en la revalorisation des compétences individuelles.</p>
+            <p>Grâce à la générosité programmée et à l'intelligence artificielle, nous identifions les besoins spécifiques et connectons les personnes avec les ressources nécessaires pour sortir de la précarité.</p>
+            <button onclick="openModal('donationModal')" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg mt-4">Faire un Don</button>
+            <p class="mt-4 text-sm text-gray-600">Votre générosité est programmée pour un impact maximal, avec un minimum de frais.</p>
+        </section>
+
+        <!-- Section 4: Tableau de Bord & Comptabilité -->
+        <section id="dashboard-section">
+            <h2>📈 Tableau de Bord & Comptabilité</h2>
+            <p>Suivez l'impact de "Solidarity Connect" et accédez aux données de comptabilité. Notre objectif est la transparence totale sur les recettes et les dépenses.</p>
+            <div class="dashboard-placeholder bg-gray-200 h-48 w-full rounded-md flex items-center justify-center text-gray-500">
+                <p>Graphiques et indicateurs ici (dashboard.js)</p>
+            </div>
+            <p class="mt-4 text-sm text-gray-600">Visualisez les résultats, les flux de trésorerie, et comment nous nous efforçons d'atteindre l'équilibre financier pour maximiser l'aide.</p>
+        </section>
+
+        <!-- Section 5: Profil Utilisateur & Configuration -->
+        <section id="profile-section">
+            <h2>⚙️ Mon Profil & Configuration</h2>
+            <p>Gérez les informations de votre profil utilisateur. C'est ici que vous pourrez ajuster vos préférences et accéder à vos données personnelles.</p>
+            <div class="google-signin-button" id="google-signin-btn">
+                <i class="fab fa-google"></i> Se connecter avec Google
+            </div>
+            <p class="mt-4 text-sm text-gray-600">Votre identification est basée sur Google OAuth pour une simplicité et une sécurité optimales.</p>
+            <div class="chatbot-container mt-4">
+                <div id="chat-messages">
+                    <div class="chat-message ai">Bonjour ! Je suis votre assistant IA. Comment puis-je vous aider avec votre profil aujourd'hui ?</div>
+                </div>
+                <div class="chat-input-group">
+                    <input type="text" id="chat-input" placeholder="Parlez à l'assistant IA..." class="flex-grow">
+                    <button id="send-chat-button">Envoyer</button>
+                </div>
+            </div>
+        </section>
     </div>
 
+    <!-- Pied de page avec navigation -->
     <footer>
-        <p>&copy; 2025 SolidarityConnect. Merci pour votre soutien.</p>
+        <div class="nav-item active" data-section="news-section">
+            <i class="fas fa-newspaper"></i>
+            <span>Actualités</span>
+        </div>
+        <div class="nav-item" data-section="map-section">
+            <i class="fas fa-map-marked-alt"></i>
+            <span>Carte</span>
+        </div>
+        <div class="nav-item mission-button" data-section="mission-section">
+            <i class="fas fa-hand-holding-heart"></i>
+        </div>
+        <div class="nav-item" data-section="dashboard-section">
+            <i class="fas fa-chart-line"></i>
+            <span>Tableau de Bord</span>
+        </div>
+        <div class="nav-item" data-section="profile-section">
+            <i class="fas fa-user-circle"></i>
+            <span>Profil</span>
+        </div>
     </footer>
+
+    <!-- Modal de Donation (simulé) -->
+    <div id="donationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('donationModal')">&times;</span>
+            <h2>Faire un Don à Solidarity Connect</h2>
+            <p>Merci de votre générosité ! Scannez ce QR code pour faire un don via PayPal.</p>
+            <img src="https://placehold.co/200x200/000000/FFFFFF?text=QR+Code+PayPal" alt="QR Code de Donation PayPal" class="mx-auto my-4 rounded-md">
+            <p class="text-sm text-gray-600">Votre don sera traité en toute sécurité. Chaque euro compte pour aider les plus démunis.</p>
+            <button onclick="closeModal('donationModal')" class="bg-primary-blue hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg mt-4">Fermer</button>
+        </div>
+    </div>
+
+    <!-- Leaflet JS - ATTENTION: integrity et crossorigin supprimés pour résoudre l'erreur SRI -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

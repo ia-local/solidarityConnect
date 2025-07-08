@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faire un don à SolidarityConnect</title>
+    <meta name="description" content="Soutenez SolidarityConnect et nos initiatives en faveur de la formation, de l'emploi et de la lutte contre la précarité par un don sécurisé via PayPal.">
+    <link rel="canonical" href="https://www.solidarityconnect.org/donation.html"> <style>
+        /* Styles CSS Intégrés pour une page simple et centrée */
+        :root {
+            --primary-color: #4CAF50; /* Vert solidarité */
+            --text-color: #333;
+            --light-bg: #f4f4f4;
+            --white: #ffffff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centre le contenu verticalement */
+            align-items: center; /* Centre le contenu horizontalement */
+            min-height: 100vh; /* Prend toute la hauteur de la fenêtre */
+            text-align: center;
+        }
+
+        .donation-container {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-width: 500px; /* Largeur maximale du conteneur */
+            width: 90%; /* S'adapte aux petits écrans */
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        .qr-code-box {
+            margin: 30px 0;
+        }
+
+        .qr-code-box img {
+            max-width: 100%; /* S'assure que l'image ne dépasse pas le conteneur */
+            height: auto;
+            border: 5px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            padding: 10px; /* Marge autour du QR code */
+            background-color: var(--white);
+            box-shadow: var(--box-shadow);
+            display: block; /* Supprime l'espace sous l'image */
+            margin: 0 auto; /* Centre l'image si elle est plus petite que son conteneur */
+        }
+
+        .paypal-button {
+            display: inline-block;
+            background-color: #0070BA; /* Couleur officielle PayPal */
+            color: var(--white);
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .paypal-button:hover, .paypal-button:focus {
+            background-color: #005EA6; /* Couleur plus foncée au survol */
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 30px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover, .back-link:focus {
+            color: var(--text-color);
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="donation-container" role="main">
+        <h1>SolidarityConnect</h1>
+        <p>Votre générosité propulse SolidarityConnect. Chaque don nous aide à développer et déployer l'intelligence artificielle au service de la formation, de l'emploi et de la lutte contre la précarité à Bavent, en Normandie, et au-delà.</p>
+        
+        <p>Pour faire un don **simple et sécurisé**, scannez le QR code ci-dessous avec l'appareil photo de votre smartphone ou cliquez sur le bouton PayPal.</p>
+
+        <div class="qr-code-box">
+            <img src="./QR.png" 
+                 alt="QR Code pour faire un don via PayPal à SolidarityConnect">
+        </div>
+
+        <p>Vous n'avez pas d'application pour scanner ? Cliquez simplement ici :</p>
+        <a href="URL_DE_VOTRE_LIEN_PAYPAL_ICI" target="_blank" rel="noopener noreferrer" class="paypal-button">Merci pour votre don</a>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2025 SolidarityConnect. Merci pour votre soutien.</p>
+    </footer>
+</body>
+</html>

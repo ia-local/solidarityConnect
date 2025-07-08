@@ -1,0 +1,10 @@
+[
+  { "id": "b1", "lat": 48.86, "lon": 2.35, "city": "Paris", "impact": "Formation IA", "status": "En cours" },
+  { "id": "b2", "lat": 49.18, "lon": -0.36, "city": "Caen", "impact": "Accès Emploi", "status": "Terminé" },
+  { "id": "b3", "lat": 43.61, "lon": 1.45, "city": "Toulouse", "impact": "Aide Logement", "status": "En cours" },
+  { "id": "b4", "lat": 44.84, "lon": -0.58, "city": "Bordeaux", "impact": "Micro-entrepreneuriat", "status": "Terminé" },
+  { "id": "b5", "lat": 48.87, "lon": 2.36, "city": "Paris", "impact": "Formation Numérique", "status": "En cours" },
+  { "id": "b6", "lat": 49.20, "lon": -0.40, "city": "Caen", "impact": "Accès aux Droits", "status": "En cours" },
+  { "id": "b7", "lat": 50.63, "lon": 3.06, "city": "Lille", "impact": "Accès Emploi", "status": "Terminé" },
+  { "id": "b8", "lat": 48.58, "lon": 7.75, "city": "Strasbourg", "impact": "Formation Langues", "status": "En cours" }
+]

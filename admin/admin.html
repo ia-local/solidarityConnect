@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solidarity Connect - Tableau de Bord Admin</title>
+    <!-- Tailwind CSS CDN pour un style rapide et responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Styles personnalisés pour le tableau de bord admin */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5; /* Fond gris clair pour l'admin */
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Layout principal: Header, Main Content, Footer */
+        .admin-layout {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .admin-header {
+            background-color: #2c3e50; /* Bleu foncé pour l'admin */
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0; /* Empêche de rétrécir */
+        }
+
+        /* Conteneur principal (Aside + Main Content) */
+        .admin-main-content-wrapper {
+            display: flex;
+            flex-grow: 1; /* Prend l'espace disponible */
+            overflow: hidden; /* Pour gérer le débordement si le contenu est trop grand */
+        }
+
+        /* Aside (Menu latéral gauche) */
+        .admin-aside {
+            background-color: #34495e; /* Bleu encore plus foncé */
+            color: white;
+            width: 250px; /* Largeur fixe pour le menu latéral */
+            padding: 1.5rem 0;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            flex-shrink: 0; /* Empêche de rétrécir */
+            overflow-y: auto; /* Permet le défilement si le menu est long */
+        }
+
+        .admin-aside-nav a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 2rem;
+            color: #ecf0f1; /* Gris très clair */
+            text-decoration: none;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .admin-aside-nav a i {
+            margin-right: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .admin-aside-nav a:hover,
+        .admin-aside-nav a.active {
+            background-color: #2c3e50; /* Couleur de survol/actif */
+            color: white;
+        }
+
+        /* Conteneur Principal du Dashboard */
+        .admin-dashboard-container {
+            flex-grow: 1; /* Prend le reste de l'espace */
+            padding: 2rem;
+            overflow-y: auto; /* Permet le défilement du contenu principal */
+        }
+
+        /* Footer */
+        .admin-footer {
+            background-color: #2c3e50;
+            color: #bdc3c7; /* Gris clair */
+            padding: 1rem 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+            flex-shrink: 0; /* Empêche de rétrécir */
+        }
+
+        /* Styles pour les sections du dashboard */
+        .dashboard-section {
+            display: none; /* Caché par défaut, affiché via JS */
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .dashboard-section.active {
+            display: block;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 0.75rem;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            color: #34495e;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive pour les petits écrans (tablettes/mobiles) - Masque l'aside */
+        @media (max-width: 768px) {
+            .admin-aside {
+                display: none; /* Cache l'aside sur les petits écrans */
+            }
+            .admin-main-content-wrapper {
+                flex-direction: column; /* Empile le contenu principal */
+            }
+            .admin-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .admin-header h1 {
+                margin-bottom: 0.5rem;
+            }
+            .admin-dashboard-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Ligne 1: Header -->
+        <header class="admin-header">
+            <h1 class="text-2xl font-bold">Solidarity Connect <span class="text-blue-300">Admin</span></h1>
+            <div class="flex items-center space-x-4">
+                <span class="text-sm">Connecté en tant que : Développeur Google</span>
+                <button class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md transition duration-200">Déconnexion</button>
+            </div>
+        </header>
+
+        <!-- Ligne 2: Aside (Menu gauche) et Conteneur Principal -->
+        <div class="admin-main-content-wrapper">
+            <!-- Aside à gauche -->
+            <aside class="admin-aside">
+                <nav class="admin-aside-nav">
+                    <a href="#" class="active" data-section="overview-dashboard">
+                        <i class="fas fa-tachometer-alt"></i> Aperçu du Dashboard
+                    </a>
+                    <a href="#" data-section="articles-management">
+                        <i class="fas fa-newspaper"></i> Gestion des Articles
+                    </a>
+                    <a href="#" data-section="users-management">
+                        <i class="fas fa-users"></i> Gestion des Utilisateurs
+                    </a>
+                    <a href="#" data-section="analytics-reports">
+                        <i class="fas fa-chart-pie"></i> Rapports & Analyses
+                    </a>
+                    <a href="#" data-section="settings-config">
+                        <i class="fas fa-cog"></i> Paramètres & Config
+                    </a>
+                    <a href="#" data-section="ai-config">
+                        <i class="fas fa-robot"></i> Configuration IA
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Conteneur Principal (70% de la largeur disponible) -->
+            <main class="admin-dashboard-container">
+                <!-- Les sections du dashboard seront chargées ici par dashboard.js -->
+
+                <!-- Section: Aperçu du Dashboard -->
+                <section id="overview-dashboard" class="dashboard-section active">
+                    <h2>📊 Aperçu Général</h2>
+                    <p>Bienvenue sur le tableau de bord administrateur. Accédez rapidement aux statistiques clés et aux indicateurs de performance de Solidarity Connect.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                        <div class="bg-blue-100 p-4 rounded-lg shadow-sm">
+                            <h3 class="text-blue-800">Total Bénéficiaires</h3>
+                            <p class="text-3xl font-bold text-blue-900" id="total-beneficiaries">...</p>
+                        </div>
+                        <div class="bg-green-100 p-4 rounded-lg shadow-sm">
+                            <h3 class="text-green-800">Dons Collectés (ce mois)</h3>
+                            <p class="text-3xl font-bold text-green-900" id="monthly-donations">...</p>
+                        </div>
+                        <div class="bg-yellow-100 p-4 rounded-lg shadow-sm">
+                            <h3 class="text-yellow-800">Formations Complétées</h3>
+                            <p class="text-3xl font-bold text-yellow-900" id="completed-trainings">...</p>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <h3>Activité Récente</h3>
+                        <ul id="recent-activity" class="list-disc list-inside bg-gray-50 p-4 rounded-lg">
+                            <li>Chargement des activités...</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Section: Gestion des Articles (réutilisation du panneau existant) -->
+                <section id="articles-management" class="dashboard-section">
+                    <h2>📰 Gestion des Articles</h2>
+                    <p>Gérez les actualités affichées sur la page d'accueil de l'application Solidarity Connect.</p>
+                    <div class="admin-panel mt-4 p-4 bg-gray-100 rounded-md">
+                        <h3 class="text-lg font-semibold mb-2">Ajouter/Modifier Article</h3>
+                        <input type="hidden" id="admin-article-id">
+                        <input type="text" id="admin-article-title" placeholder="Titre de l'article" class="w-full p-2 mb-2 border rounded">
+                        <textarea id="admin-article-content" placeholder="Contenu de l'article" rows="4" class="w-full p-2 mb-2 border rounded"></textarea>
+                        <input type="text" id="admin-article-author" placeholder="Auteur" class="w-full p-2 mb-2 border rounded">
+                        <div class="flex gap-2">
+                            <button id="admin-add-article-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Ajouter Article</button>
+                            <button id="admin-update-article-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg hidden">Modifier Article</button>
+                            <button id="admin-cancel-edit-btn" class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg hidden">Annuler</button>
+                        </div>
+                    </div>
+                    <div id="admin-articles-list" class="mt-4">
+                        <p class="text-center text-gray-500">Chargement des articles...</p>
+                    </div>
+                </section>
+
+                <!-- Section: Gestion des Utilisateurs -->
+                <section id="users-management" class="dashboard-section">
+                    <h2>👥 Gestion des Utilisateurs</h2>
+                    <p>Visualisez et gérez les utilisateurs de la plateforme (bénéficiaires, donateurs, administrateurs).</p>
+                    <div id="users-list" class="mt-4">
+                        <p class="text-center text-gray-500">Chargement des utilisateurs...</p>
+                    </div>
+                </section>
+
+                <!-- Section: Rapports & Analyses -->
+                <section id="analytics-reports" class="dashboard-section">
+                    <h2>📈 Rapports & Analyses</h2>
+                    <p>Accédez à des rapports détaillés sur l'impact, les flux financiers et la démographie des bénéficiaires.</p>
+                    <div class="analytics-placeholder bg-gray-100 h-64 flex items-center justify-center rounded-md">
+                        <p>Graphiques et données d'analyse ici</p>
+                    </div>
+                </section>
+
+                <!-- Section: Paramètres & Configuration -->
+                <section id="settings-config" class="dashboard-section">
+                    <h2>⚙️ Paramètres & Configuration</h2>
+                    <p>Configurez les paramètres généraux de l'application, les seuils, et les intégrations.</p>
+                    <div class="p-4 bg-gray-100 rounded-md">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="poverty-threshold-input">
+                            Seuil de Pauvreté National (€/mois)
+                        </label>
+                        <input type="number" id="poverty-threshold-input" value="1158" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg mt-4">Sauvegarder Paramètres</button>
+                    </div>
+                </section>
+
+                <!-- Section: Configuration IA -->
+                <section id="ai-config" class="dashboard-section">
+                    <h2>🤖 Configuration IA</h2>
+                    <p>Ajustez les paramètres et les prompts de l'Intelligence Artificielle pour chaque rôle.</p>
+                    <div class="p-4 bg-gray-100 rounded-md">
+                        <h3 class="font-semibold mb-2">Prompt Système (Bénéficiaire)</h3>
+                        <textarea class="w-full p-2 border rounded mb-4" rows="6">Vous êtes un assistant IA empathique et pragmatique de Solidarity Connect...</textarea>
+                        <h3 class="font-semibold mb-2">Modèle IA par défaut</h3>
+                        <select class="w-full p-2 border rounded">
+                            <option>gemini-pro</option>
+                            <option>gemma2-9b-it (Groq)</option>
+                        </select>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg mt-4">Mettre à jour Config IA</button>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+
+        <!-- Ligne 3: Footer -->
+        <footer class="admin-footer">
+            <p>&copy; 2024 Solidarity Connect Admin. Tous droits réservés. Développé par votre équipe.</p>
+        </footer>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
