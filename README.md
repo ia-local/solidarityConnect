@@ -132,13 +132,23 @@ Le projet "Solidarity Connect", porté par un parti politique, s'inscrit dans un
 
 ---
 
+## 🌐 Ressources Communautaires
+
+Connectez-vous avec la communauté "Solidarity Connect" et suivez nos avancées :
+
+* **Dépôt GitHub :** [https://github.com/ia-local/solidarityConnect](https://github.com/ia-local/solidarityConnect)
+* **Groupe Telegram :** [https://t.me/+5AriZHOa4-owYmFk](https://t.me/+5AriZHOa4-owYmFk)
+* **Chaîne YouTube :** [https://www.youtube.com/@IA_SolidarityConnect](https://www.youtube.com/@IA_SolidarityConnect)
+
+---
+
 ## 🛠️ Instructions de Démarrage Rapide
 
 Pour lancer le serveur de développement :
 
 1.  **Cloner le dépôt :**
     ```bash
-    git clone [https://github.com/votre_utilisateur/solidarityConnect.git](https://github.com/votre_utilisateur/solidarityConnect.git)
+    git clone [https://github.com/ia-local/solidarityConnect.git](https://github.com/ia-local/solidarityConnect.git)
     cd solidarityConnect
     ```
 2.  **Installer les dépendances :**

@@ -5,15 +5,25 @@ const path = require('path');
 const fs = require('fs').promises;
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const Groq = require('groq-sdk');
+const { Telegraf } = require('telegraf'); // Importe la bibliothèque Telegraf
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const geminiModel = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+// Initialisation du SDK Google Generative AI
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+const geminiModel = genAI.getGenerativeModel({ model: "gemini-pro" });
 
+// Initialisation du SDK Groq
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+// Initialisation du bot Telegram
+const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
+if (!telegramBotToken) {
+    console.error("TELEGRAM_BOT_TOKEN n'est pas défini dans le fichier .env. Le bot Telegram ne sera pas démarré.");
+}
+const bot = new Telegraf(telegramBotToken);
 
 // Chemins vers les fichiers de données
 const DB_ARTICLES_PATH = path.join(__dirname, 'data', 'db_articles.json');
@@ -26,8 +36,7 @@ app.use(express.json());
 // --- SERVIR LES FICHIERS STATIQUES ---
 // Servir les fichiers statiques depuis le répertoire 'docs' (pour l'application front-end)
 app.use(express.static(path.join(__dirname, 'docs')));
-// NOUVEAU : Servir les fichiers statiques depuis le répertoire 'admin' (pour le tableau de bord admin)
-// Cela permet de servir admin.html, dashboard.js, et tout autre asset dans le dossier admin/
+// Servir les fichiers statiques depuis le répertoire 'admin' (pour le tableau de bord admin)
 app.use('/admin', express.static(path.join(__dirname, 'admin')));
 
 
@@ -138,11 +147,8 @@ app.get('/api/beneficiary-locations', async (req, res) => {
 // --- Route API pour l'interaction avec l'IA (mise à jour pour les rôles et la sélection de modèle) ---
 app.post('/api/ai-chat', async (req, res) => {
     const { message, history } = req.body;
-    // SIMULATION DU RÔLE DE L'UTILISATEUR POUR LE DÉVELOPPEMENT
-    // En production, ce rôle viendrait de l'authentification (ex: JWT)
-    const userRole = req.query.role || 'beneficiaire'; // Par défaut 'beneficiaire'
-    // Sélection du modèle d'IA via paramètre de requête
-    const modelChoice = req.query.model_choice || 'gemini'; // Par défaut 'gemini', peut être 'gemma'
+    const userRole = req.query.role || 'beneficiaire';
+    const modelChoice = req.query.model_choice || 'gemini';
 
     if (!message) {
         return res.status(400).json({ error: "Le message est vide." });
@@ -151,7 +157,6 @@ app.post('/api/ai-chat', async (req, res) => {
     try {
         let systemPrompt = "";
 
-        // Définition du prompt système en fonction du rôle de l'utilisateur
         if (userRole === 'beneficiaire') {
             systemPrompt = "Vous êtes un assistant IA empathique et pragmatique de Solidarity Connect, dédié à aider les personnes en situation de précarité en France. Votre mission est de fournir des informations claires et actionnables sur les aides sociales, les formations, les opportunités d'emploi, le logement, et la gestion budgétaire, en tenant compte de leur localisation et de leur situation personnelle. Votre ton est encourageant, respectueux et direct. Vous êtes un facilitateur d'autonomie.";
         } else if (userRole === 'donateur') {
@@ -159,20 +164,16 @@ app.post('/api/ai-chat', async (req, res) => {
         } else if (userRole === 'administrateur') {
             systemPrompt = "Vous êtes un assistant IA analytique et optimisateur de Solidarity Connect, dédié à soutenir les administrateurs et développeurs dans la gestion et l'amélioration de la plateforme. Votre mission est de fournir des analyses de données, des rapports de performance, d'identifier des tendances, de suggérer des optimisations techniques ou stratégiques, et d'aider à la conformité. Votre ton est factuel, précis et orienté solution.";
         } else {
-            // Prompt par défaut si le rôle n'est pas reconnu ou non spécifié
             systemPrompt = "Vous êtes l'assistant général de Solidarity Connect, une IA bienveillante dédiée à aider les personnes en situation de précarité. Je suis là pour vous accompagner vers une plus grande autonomie et une vie digne.";
         }
 
         let aiReply = "Désolé, je n'ai pas pu générer de réponse.";
 
-        // Sélection du modèle d'IA à utiliser
         if (modelChoice === 'gemma') {
-            // Pour Groq, l'historique est un tableau d'objets avec 'role' et 'content'
             const groqHistory = [
                 { role: "system", content: systemPrompt },
                 { role: "assistant", content: "Compris. Je suis prêt à vous assister selon votre rôle." }
             ];
-            // Ajouter l'historique de conversation précédent
             history.forEach(item => {
                 groqHistory.push({ role: item.role === 'ai' ? 'assistant' : item.role, content: item.content });
             });
@@ -187,13 +188,11 @@ app.post('/api/ai-chat', async (req, res) => {
             });
             aiReply = chatCompletion.choices[0]?.message?.content;
 
-        } else { // Par défaut, ou si modelChoice est 'gemini'
-            // Pour Gemini, l'historique est un tableau d'objets avec 'role' et 'parts'
+        } else {
             const geminiHistory = [
                 { role: "user", parts: [{ text: systemPrompt }] },
                 { role: "model", parts: [{ text: "Compris. Je suis prêt à vous assister selon votre rôle." }] }
             ];
-            // Ajouter l'historique de conversation précédent
             history.map(item => ({
                 role: item.role === 'ai' ? 'model' : item.role,
                 parts: [{ text: item.content }]
@@ -218,6 +217,80 @@ app.post('/api/ai-chat', async (req, res) => {
     }
 });
 
+// --- Intégration du Bot Telegram ---
+
+// Gestion des commandes Telegram
+bot.command('start', (ctx) => {
+    ctx.reply('Bienvenue sur le bot Solidarity Connect ! Je suis là pour vous aider. Utilisez /aide pour voir les commandes disponibles.');
+});
+
+bot.command('aide', (ctx) => {
+    ctx.reply('Voici les commandes disponibles :\n' +
+             '/cmd1 - Commande 1 (Exemple)\n' +
+             '/cmd2 - Commande 2 (Exemple)\n' +
+             'Envoyez-moi un message pour discuter avec l\'IA.');
+});
+
+// Commande 1 (exemple)
+bot.command('cmd1', (ctx) => {
+    ctx.reply('Vous avez activé la Commande 1. Ceci est un exemple de fonctionnalité.');
+});
+
+// Commande 2 (exemple)
+bot.command('cmd2', (ctx) => {
+    ctx.reply('Vous avez activé la Commande 2. Ceci est une autre fonctionnalité.');
+});
+
+// Gestion des messages texte normaux (conversation avec l'IA)
+bot.on('text', async (ctx) => {
+    const userMessage = ctx.message.text;
+    const userId = ctx.from.id; // Identifiant unique de l'utilisateur Telegram
+
+    console.log(`Message Telegram reçu de ${userId}: ${userMessage}`);
+
+    try {
+        // Définir un prompt système pour l'IA du bot Telegram
+        // Ici, nous utilisons un rôle générique de bénéficiaire pour le bot Telegram
+        const systemPrompt = "Vous êtes l'assistant IA de Solidarity Connect sur Telegram, dédié à aider les personnes en situation de précarité. Votre mission est de fournir des informations, des conseils et des orientations de manière concise et directe. Votre ton est bienveillant et pratique.";
+        
+        // L'historique de conversation pour le bot Telegram est géré par Groq directement
+        // Pour des conversations plus longues, il faudrait stocker l'historique par userId
+        const groqHistory = [
+            { role: "system", content: systemPrompt },
+            { role: "assistant", content: "Compris. Je suis prêt à vous assister." }
+        ];
+        groqHistory.push({ role: "user", content: userMessage });
+
+        console.log("Appel à Groq pour la réponse Telegram...");
+        const chatCompletion = await groq.chat.completions.create({
+            messages: groqHistory,
+            model: "gemma2-9b-it", // Utilisation de Gemma pour le bot Telegram pour la rapidité
+            temperature: 0.7, // Un peu plus de créativité pour la conversation
+            max_tokens: 500,
+        });
+
+        const aiReply = chatCompletion.choices[0]?.message?.content || "Désolé, je n'ai pas pu générer de réponse pour le moment.";
+        ctx.reply(aiReply); // Envoyer la réponse de l'IA à l'utilisateur Telegram
+
+    } catch (error) {
+        console.error("Erreur lors de l'interaction IA avec Telegram:", error);
+        ctx.reply("Désolé, je rencontre un problème pour traiter votre demande en ce moment. Veuillez réessayer plus tard.");
+    }
+});
+
+// Démarrer le bot Telegram
+if (telegramBotToken) {
+    bot.launch()
+        .then(() => console.log('Bot Telegram démarré avec succès !'))
+        .catch(err => console.error('Erreur au démarrage du bot Telegram:', err));
+}
+
+// Gérer les arrêts propres de l'application
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
+
+// --- Routes Express (inchangées) ---
+
 // Route spécifique pour servir admin.html
 app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'admin', 'admin.html'));
@@ -229,4 +302,5 @@ app.listen(port, () => {
     console.log(`Serveur Solidarity Connect démarré sur http://localhost:${port}`);
     console.log(`Clé API Google chargée : ${process.env.GOOGLE_API_KEY ? 'Oui' : 'Non (Vérifiez votre fichier .env)'}`);
     console.log(`Clé API Groq chargée : ${process.env.GROQ_API_KEY ? 'Oui' : 'Non (Vérifiez votre fichier .env)'}`);
+    console.log(`Token Bot Telegram chargé : ${process.env.TELEGRAM_BOT_TOKEN ? 'Oui' : 'Non (Le bot ne démarrera pas sans)'}`);
 });
