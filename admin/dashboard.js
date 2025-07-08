@@ -23,13 +23,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const githubRepoLinkElem = document.getElementById('github-repo-link');
     const githubLastCommitElem = document.getElementById('github-last-commit');
 
-    // --- Nouveaux éléments pour la comptabilité et trésorerie ---
+    // --- Éléments pour la comptabilité et trésorerie (existants) ---
     const totalCollectedElem = document.getElementById('total-collected');
     const totalDisbursedElem = document.getElementById('total-disbursed');
     const currentBalanceElem = document.getElementById('current-balance');
     const recurringDonorsElem = document.getElementById('recurring-donors');
     const monthlyRecurringCommitmentElem = document.getElementById('monthly-recurring-commitment');
     const recentTransactionsList = document.getElementById('recent-transactions');
+
+    // --- Nouveaux éléments pour les statistiques de pauvreté et pouvoir d'achat ---
+    const nationalPovertyThresholdElem = document.getElementById('national-poverty-threshold');
+    const nationalPurchasingPowerElem = document.getElementById('national-purchasing-power');
+    const regionalPovertyTableBody = document.getElementById('regional-poverty-table-body');
+
+    // --- Nouveaux éléments pour la gestion des sondages ---
+    const surveyQuestionInput = document.getElementById('survey-question');
+    const surveyOptionsInput = document.getElementById('survey-options');
+    const surveyTargetSelect = document.getElementById('survey-target');
+    const createSurveyBtn = document.getElementById('create-survey-btn');
+    const publishSurveyTelegramBtn = document.getElementById('publish-survey-telegram-btn');
+    const publishSurveyYoutubeBtn = document.getElementById('publish-survey-youtube-btn');
+    const activeSurveysList = document.getElementById('active-surveys-list');
+    const surveyResultsDisplay = document.getElementById('survey-results-display');
 
 
     // Fonction pour afficher une section du dashboard
@@ -56,7 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sectionId === 'accounting-treasury-management') {
             loadAccountingTreasuryData(); // Charge les données de comptabilité et trésorerie
         }
-        // Ajoutez ici d'autres logiques de chargement pour d'autres sections
+        if (sectionId === 'analytics-reports') {
+            loadAnalyticsReports(); // Charge les données des rapports et analyses
+        }
+        if (sectionId === 'surveys-management') {
+            loadSurveysManagement(); // Charge les données de gestion des sondages
+        }
     }
 
     // --- Logique pour l'Aperçu du Dashboard ---
@@ -135,10 +155,139 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
+    // --- Logique pour les Rapports & Analyses (Statistiques de Pauvreté) ---
+    async function loadAnalyticsReports() {
+        // Simule le chargement des données
+        nationalPovertyThresholdElem.textContent = 'Chargement...';
+        nationalPurchasingPowerElem.textContent = 'Chargement...';
+        regionalPovertyTableBody.innerHTML = '<tr><td colspan="5" class="text-center py-4">Chargement des données régionales...</td></tr>';
 
-    // --- Fonctions pour la gestion des articles (CRUD) dans l'admin ---
+        await new Promise(resolve => setTimeout(resolve, 800)); // Simule un délai réseau
 
-    // Charger et afficher les articles dans la section admin
+        // Données nationales simulées
+        const nationalPovertyThreshold = 1193; // €/mois
+        const nationalPurchasingPower = 1.05; // Index (1.0 = moyenne nationale)
+
+        nationalPovertyThresholdElem.textContent = `${nationalPovertyThreshold} €/mois`;
+        nationalPurchasingPowerElem.textContent = `${nationalPovertyThreshold.toFixed(2)} (Index)`;
+
+        // Données régionales simulées
+        const regionalData = [
+            { region: 'Île-de-France', povertyRate: '15.5%', avgRent: 850, mvAdjusted: 1450, purchasingPowerIndex: 0.85 },
+            { region: 'Nouvelle-Aquitaine', povertyRate: '13.0%', avgRent: 650, mvAdjusted: 1150, purchasingPowerIndex: 1.10 },
+            { region: 'Occitanie', povertyRate: '14.2%', avgRent: 600, mvAdjusted: 1100, purchasingPowerIndex: 1.15 },
+            { region: 'Normandie', povertyRate: '12.8%', avgRent: 580, mvAdjusted: 1080, purchasingPowerIndex: 1.18 },
+            { region: 'PACA', povertyRate: '16.1%', avgRent: 780, mvAdjusted: 1350, purchasingPowerIndex: 0.90 },
+        ];
+
+        regionalPovertyTableBody.innerHTML = ''; // Vider le tableau
+        regionalData.forEach(data => {
+            const row = document.createElement('tr');
+            row.classList.add('hover:bg-gray-50');
+            row.innerHTML = `
+                <td class="py-3 px-6 border-b border-gray-200 font-semibold">${data.region}</td>
+                <td class="py-3 px-6 border-b border-gray-200">${data.povertyRate}</td>
+                <td class="py-3 px-6 border-b border-gray-200">${data.avgRent}€</td>
+                <td class="py-3 px-6 border-b border-gray-200">${data.mvAdjusted}€</td>
+                <td class="py-3 px-6 border-b border-gray-200">${data.purchasingPowerIndex.toFixed(2)}</td>
+            `;
+            regionalPovertyTableBody.appendChild(row);
+        });
+
+        // Ajout de texte explicatif sur le rôle de l'IA dans l'analyse
+        const analyticsDescription = document.querySelector('#analytics-reports p');
+        if (analyticsDescription) {
+            analyticsDescription.textContent = "Accédez à des rapports détaillés sur l'impact, les flux financiers et la démographie des bénéficiaires. L'Intelligence Artificielle est utilisée pour l'analyse prédictive des zones de pauvreté, le calcul ajusté du pouvoir d'achat en fonction de la géolocalisation, et l'évaluation de l'impact de la Taxe IA sur l'économie circulaire et la revalorisation des compétences.";
+        }
+    }
+
+    // --- Fonctions pour la gestion des sondages ---
+    async function loadSurveysManagement() {
+        activeSurveysList.innerHTML = '<li>Chargement des sondages actifs...</li>';
+        surveyResultsDisplay.innerHTML = '<p class="text-center text-gray-500">Les résultats détaillés des sondages s\'afficheront ici.</p>';
+
+        await new Promise(resolve => setTimeout(resolve, 600)); // Simule un délai réseau
+
+        // Sondages actifs simulés
+        activeSurveysList.innerHTML = `
+            <li>"Quel est votre salaire net mensuel ?" (Cible: Tous les Citoyens) - Créé le 08/07/2024</li>
+            <li>"Votre avis sur le seuil de pauvreté actuel (1193€) ?" (Cible: Bénéficiaires) - Créé le 01/07/2024</li>
+        `;
+
+        // Résultats de sondage simulés (pour l'exemple)
+        surveyResultsDisplay.innerHTML = `
+            <h4 class="text-lg font-semibold mb-2">Résultats : "Quel est votre salaire net mensuel ?"</h4>
+            <ul class="list-disc list-inside ml-4">
+                <li>Moins de 1000€ : 45%</li>
+                <li>1000€ - 1500€ : 30%</li>
+                <li>Plus de 1500€ : 25%</li>
+            </ul>
+            <p class="text-sm text-gray-600 mt-4">Total participants : 520</p>
+        `;
+
+        // Ajout de texte explicatif sur le rôle de l'IA dans la gestion des sondages
+        const surveyDescription = document.querySelector('#surveys-management p');
+        if (surveyDescription) {
+            surveyDescription.textContent = "Créez et gérez des sondages pour recueillir l'avis des citoyens sur le seuil de pauvreté et le pouvoir d'achat. L'Intelligence Artificielle optimise le déploiement de ces sondages sur diverses plateformes (Telegram, YouTube, GitHub, Google) pour maximiser la portée et la pertinence des données collectées, affinant ainsi notre compréhension des réalités économiques.";
+        }
+    }
+
+    createSurveyBtn.addEventListener('click', () => {
+        const question = surveyQuestionInput.value.trim();
+        const options = surveyOptionsInput.value.split('\n').map(opt => opt.trim()).filter(opt => opt !== '');
+        const target = surveyTargetSelect.value;
+
+        if (!question || options.length === 0) {
+            alert('Veuillez entrer une question et au moins une option de réponse pour le sondage.');
+            return;
+        }
+
+        const newSurvey = {
+            id: Date.now().toString(),
+            question,
+            options,
+            target,
+            status: 'Créé',
+            date: new Date().toLocaleDateString('fr-FR')
+        };
+        
+        // Simuler l'ajout du sondage (en réalité, envoi à une API backend)
+        console.log('Nouveau sondage créé:', newSurvey);
+        alert('Sondage créé avec succès !');
+        
+        // Réinitialiser le formulaire
+        surveyQuestionInput.value = '';
+        surveyOptionsInput.value = '';
+        surveyTargetSelect.value = 'all';
+
+        loadSurveysManagement(); // Recharger la liste des sondages
+    });
+
+    publishSurveyTelegramBtn.addEventListener('click', () => {
+        const question = surveyQuestionInput.value.trim();
+        if (!question) {
+            alert('Veuillez créer ou sélectionner un sondage avant de publier sur Telegram.');
+            return;
+        }
+        // Simuler l'envoi à l'API Telegram (nécessiterait une route backend spécifique)
+        console.log(`Sondage "${question}" publié sur Telegram.`);
+        alert('Sondage publié sur Telegram (simulation) !');
+    });
+
+    publishSurveyYoutubeBtn.addEventListener('click', () => {
+        const question = surveyQuestionInput.value.trim();
+        if (!question) {
+            alert('Veuillez créer ou sélectionner un sondage avant de publier sur YouTube.');
+            return;
+        }
+        // Simuler l'envoi à l'API YouTube (nécessiterait une route backend spécifique)
+        console.log(`Sondage "${question}" publié sur YouTube.`);
+        alert('Sondage publié sur YouTube (simulation) !');
+    });
+
+
+    // --- Fonctions pour la gestion des articles (CRUD) dans l'admin (inchangées) ---
+
     async function loadAdminArticles() {
         adminArticlesList.innerHTML = '<p class="text-center text-gray-500">Chargement des articles...</p>';
         try {
@@ -185,7 +334,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Ajouter un article
     adminAddArticleBtn.addEventListener('click', async () => {
         const title = adminArticleTitleInput.value.trim();
         const content = adminArticleContentInput.value.trim();
@@ -217,7 +365,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Pré-remplit le formulaire pour modifier un article
     async function editAdminArticle(id) {
         try {
             const response = await fetch('/api/articles');
@@ -238,9 +385,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Erreur lors de la préparation de la modification:', error);
             alert('Erreur lors de la récupération de l\'article pour modification.');
         }
-    }
+    };
 
-    // Met à jour un article
     adminUpdateArticleBtn.addEventListener('click', async () => {
         const id = adminArticleIdInput.value;
         const title = adminArticleTitleInput.value.trim();
@@ -278,7 +424,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Annule la modification
     adminCancelEditBtn.addEventListener('click', () => {
         adminArticleIdInput.value = '';
         adminArticleTitleInput.value = '';
@@ -289,7 +434,6 @@ document.addEventListener('DOMContentLoaded', () => {
         adminCancelEditBtn.classList.add('hidden');
     });
 
-    // Supprime un article
     async function deleteAdminArticle(id) {
         if (!confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
             return;
@@ -311,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // Gestion des clics sur les liens de navigation
+    // Gestion des clics sur les liens de navigation (inchangée)
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault(); // Empêche le rechargement de la page

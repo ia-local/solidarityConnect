@@ -176,6 +176,9 @@
                     <a href="#" data-section="analytics-reports">
                         <i class="fas fa-chart-pie"></i> Rapports & Analyses
                     </a>
+                    <a href="#" data-section="surveys-management">
+                        <i class="fas fa-poll"></i> Gestion des Sondages
+                    </a>
                     <a href="#" data-section="settings-config">
                         <i class="fas fa-cog"></i> Paramètres & Config
                     </a>
@@ -322,8 +325,92 @@
                 <section id="analytics-reports" class="dashboard-section">
                     <h2>📈 Rapports & Analyses</h2>
                     <p>Accédez à des rapports détaillés sur l'impact, les flux financiers et la démographie des bénéficiaires.</p>
-                    <div class="analytics-placeholder bg-gray-100 h-64 flex items-center justify-center rounded-md">
-                        <p>Graphiques et données d'analyse ici</p>
+                    
+                    <!-- Statistiques de Pauvreté et Pouvoir d'Achat (DÉPLACÉES ICI) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <div class="bg-blue-100 p-4 rounded-lg shadow-sm">
+                            <h3 class="text-blue-800">Seuil de Pauvreté National (moyen)</h3>
+                            <p class="text-3xl font-bold text-blue-900" id="national-poverty-threshold">...</p>
+                        </div>
+                        <div class="bg-green-100 p-4 rounded-lg shadow-sm">
+                            <h3 class="text-green-800">Pouvoir d'Achat Moyen (National)</h3>
+                            <p class="text-3xl font-bold text-green-900" id="national-purchasing-power">...</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <h3>Statistiques de Pauvreté et Pouvoir d'Achat par Région</h3>
+                        <div class="overflow-x-auto mt-4">
+                            <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
+                                <thead>
+                                    <tr class="bg-gray-100 text-left text-gray-600 uppercase text-sm leading-normal">
+                                        <th class="py-3 px-6 border-b border-gray-200">Région</th>
+                                        <th class="py-3 px-6 border-b border-gray-200">Taux de Pauvreté</th>
+                                        <th class="py-3 px-6 border-b border-gray-200">Loyer Moyen (€)</th>
+                                        <th class="py-3 px-6 border-b border-gray-200">MV Ajusté (€)</th>
+                                        <th class="py-3 px-6 border-b border-gray-200">Index Pouvoir d'Achat</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-700 text-sm" id="regional-poverty-table-body">
+                                    <tr><td colspan="5" class="text-center py-4">Chargement des données régionales...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <h3>Visualisation des Données Régionales</h3>
+                        <div class="bg-gray-100 h-64 flex items-center justify-center rounded-md">
+                            <p>Graphique (ex: barres ou carte choroplèthe) ici</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- NOUVELLE SECTION: Gestion des Sondages -->
+                <section id="surveys-management" class="dashboard-section">
+                    <h2>🗳️ Gestion des Sondages</h2>
+                    <p>Créez et gérez des sondages pour recueillir l'avis des citoyens sur le seuil de pauvreté et le pouvoir d'achat.</p>
+
+                    <div class="admin-panel mt-4 p-4 bg-gray-100 rounded-md">
+                        <h3 class="text-lg font-semibold mb-2">Créer un Nouveau Sondage</h3>
+                        <div class="mb-4">
+                            <label for="survey-question" class="block text-gray-700 text-sm font-bold mb-2">Question du Sondage :</label>
+                            <textarea id="survey-question" placeholder="Ex: Quel est votre salaire net mensuel ?" rows="3" class="w-full p-2 border rounded"></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label for="survey-options" class="block text-gray-700 text-sm font-bold mb-2">Options de Réponse (une par ligne) :</label>
+                            <textarea id="survey-options" placeholder="Ex: Moins de 1000€&#10;1000€ - 1500€&#10;Plus de 1500€" rows="4" class="w-full p-2 border rounded"></textarea>
+                            <p class="text-xs text-gray-500 mt-1">Séparez chaque option par un retour à la ligne.</p>
+                        </div>
+                        <div class="mb-4">
+                            <label for="survey-target" class="block text-gray-700 text-sm font-bold mb-2">Cible du Sondage :</label>
+                            <select id="survey-target" class="w-full p-2 border rounded">
+                                <option value="all">Tous les Citoyens</option>
+                                <option value="beneficiaries">Bénéficiaires enregistrés</option>
+                                <option value="donors">Donateurs enregistrés</option>
+                                <option value="telegram">Utilisateurs Telegram</option>
+                                <option value="youtube">Abonnés YouTube</option>
+                            </select>
+                        </div>
+                        <div class="flex gap-2">
+                            <button id="create-survey-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Créer Sondage</button>
+                            <button id="publish-survey-telegram-btn" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-lg">Publier sur Telegram</button>
+                            <button id="publish-survey-youtube-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg">Publier sur YouTube</button>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <h3>Sondages Actifs</h3>
+                        <ul id="active-surveys-list" class="list-disc list-inside bg-gray-50 p-4 rounded-lg">
+                            <li>Chargement des sondages actifs...</li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-8">
+                        <h3>Résultats des Sondages Précédents</h3>
+                        <div id="survey-results-display" class="bg-gray-100 h-64 flex items-center justify-center rounded-md">
+                            <p>Les résultats détaillés des sondages s'afficheront ici.</p>
+                        </div>
                     </div>
                 </section>
 
